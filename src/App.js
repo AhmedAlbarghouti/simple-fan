@@ -1,42 +1,52 @@
 import "./App.css";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import fan from "./fan.svg";
 const App = () => {
-	const [data, setData] = useState({ data: [] });
-	const [isLoading, setIsLoading] = useState(false);
-	const [err, setErr] = useState("");
+	const [change, setChange] = useState(false);
+
 	const [status, setStatus] = useState(false);
 	const [speed, setSpeed] = useState(0);
 	const [reverse, setReverse] = useState(false);
 
-	const handleClick = async () => {
-		setIsLoading(true);
-
-		try {
-			const response = await fetch("https://simple-fan-api.herokuapp.com/", {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-				},
-			});
-
-			if (!response.ok) {
-				throw new Error(`Error! status: ${response.status}`);
-			}
-
-			const result = await response.json();
-
-			setSpeed(result.speed);
-			setStatus(result.status);
-			setReverse(result.reverse);
-
-			setData(result);
-		} catch (err) {
-			setErr(err.message);
-		} finally {
-			setIsLoading(false);
-		}
+	const getSpeed = () => {
+		if (speed === 1) return "3s";
+		if (speed === 2) return "2s";
+		if (speed === 3) return "1s";
 	};
+	const handleSpeedClick = async () => {
+		axios
+			.get("https://simple-fan-api.herokuapp.com/pullSpeedCord")
+			.catch((err) => console.log(err));
+		setChange(true);
+	};
+
+	const handleReverseClick = async () => {
+		axios
+			.get("https://simple-fan-api.herokuapp.com/pullReverseCord")
+			.catch((err) => console.log(err));
+		setChange(true);
+	};
+
+	const handleResetClick = async () => {
+		axios
+			.get("https://simple-fan-api.herokuapp.com/reset")
+			.catch((err) => console.log(err));
+		setChange(true);
+	};
+
+	useEffect(() => {
+		axios
+			.get("https://simple-fan-api.herokuapp.com/")
+			.then((res) => {
+				setSpeed(res.data.speed);
+				setReverse(res.data.reverse);
+				setStatus(res.data.status);
+			})
+			.catch((err) => console.log(err));
+
+		setChange(false);
+	}, [change]);
 
 	return (
 		<div className='App'>
@@ -49,21 +59,29 @@ const App = () => {
 					</div>
 
 					<div className='fan-detail'>
-						<h2>Status</h2>
-						<p>{status.toString()}</p>
-					</div>
-
-					<div className='fan-detail'>
 						<h2>Reverse</h2>
 						<p>{reverse.toString()}</p>
 					</div>
+
+					<div className='fan-detail'>
+						<h2>Status</h2>
+						<p>{status.toString()}</p>
+					</div>
 				</div>
 
-				<img src={fan} alt='fan' className='fan' />
+				<img
+					src={fan}
+					alt='fan'
+					className='fan'
+					style={{
+						animationDuration: getSpeed(),
+						animationDirection: reverse ? "reverse" : "normal",
+					}}
+				/>
 				<div className='control-bar'>
-					<button onClick={handleClick}>Speed Cord</button>
-					<button onClick={handleClick}>Reverse Cord</button>
-					<button onClick={handleClick}>Reset Cord</button>
+					<button onClick={handleSpeedClick}>Speed Cord</button>
+					<button onClick={handleReverseClick}>Reverse Cord</button>
+					<button onClick={handleResetClick}>Reset Cord</button>
 				</div>
 			</main>
 

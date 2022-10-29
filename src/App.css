@@ -32,6 +32,21 @@ main {
 	align-self: center;
 	filter: invert(100%) sepia(9%) saturate(1767%) hue-rotate(317deg)
 		brightness(105%) contrast(101%);
+
+	animation-name: spin;
+
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-direction: normal;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .App {
@@ -74,6 +89,7 @@ button {
 
 .fan-detail p {
 	font-size: 1.5rem;
+	text-transform: capitalize;
 }
 
 .footer-name {
