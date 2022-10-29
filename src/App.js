@@ -97,7 +97,10 @@ const App = () => {
 					Api-Get Info
 				</a>
 				|
-				<a href='https://www.ahmedalbarghouti.dev/' className='footer-name'>
+				<a
+					href='https://github.com/AhmedAlbarghouti/simple-fan-api'
+					className='footer-name'
+				>
 					Api-Github
 				</a>
 				|
