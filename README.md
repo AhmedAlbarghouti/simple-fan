@@ -1,5 +1,5 @@
 ﻿# simple-fan
 
-[Live Site](simple-fan.vercel.app)
+[Live Site](https://simple-fan.vercel.app/)
 
 Works as a frontend for [simple-fan-api](https://github.com/AhmedAlbarghouti/simple-fan-api)
