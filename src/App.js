@@ -2,7 +2,9 @@ import "./App.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import fan from "./fan.svg";
+import github from "./github.svg";
 const App = () => {
+	document.title = "Simple Fan";
 	const [change, setChange] = useState(false);
 
 	const [status, setStatus] = useState(false);
@@ -50,7 +52,12 @@ const App = () => {
 
 	return (
 		<div className='App'>
-			<h1 className='title'>Simple Fan</h1>
+			<h1 className='title'>
+				Simple Fan
+				<a href='https://github.com/AhmedAlbarghouti/simple-fan'>
+					<img src={github} alt='github' className='github-icon' />
+				</a>
+			</h1>
 			<main>
 				<div className='fan-details'>
 					<div className='fan-detail'>
@@ -86,12 +93,17 @@ const App = () => {
 			</main>
 
 			<footer>
-				<p>
-					Made by{" "}
-					<a href='https://www.ahmedalbarghouti.dev/' className='footer-name'>
-						Ahmed Albarghouti
-					</a>
-				</p>
+				<a href='https://simple-fan-api.herokuapp.com/' className='footer-name'>
+					Api-Get Info
+				</a>
+				|
+				<a href='https://www.ahmedalbarghouti.dev/' className='footer-name'>
+					Api-Github
+				</a>
+				|
+				<a href='https://www.ahmedalbarghouti.dev/' className='footer-name'>
+					Ahmed Albarghouti
+				</a>
 			</footer>
 		</div>
 	);
